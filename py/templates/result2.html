@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultado Victoria</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="javascript:history.back()"> < Volver </a>
+    </div>
+
+    <div class="page-info">
+        <h1>Resultado de la Predicción</h1>
+        <p>Predicción para el resultado del equipo basado en el equipamiento seleccionado:</p>
+        <p>El equipo <strong>{{ 'ganará' if round_winner == 1 else 'no ganará' }}</strong> según el modelo.</p>
+    </div>
+
+</body>
+</html>

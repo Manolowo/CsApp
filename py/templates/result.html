@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+    <style>
+        .prediction-list {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .prediction-list li {
+            margin: 0 10px;
+            padding: 10px; 
+            text-align: center;
+        }
+
+        .prediction-list li img {
+            width: 210px;
+        }
+    </style>
+
+</head>
+<body>
+    <h1>Resultados</h1>
+
+    <div class="navbar">
+        <a href="javascript:history.back()"> < Volver </a>
+    </div>
+    
+
+    <div class="page-info">
+        <h3>Dada la economia del equipo rival, es más probable la compra de las siguientes armas:</h3>
+    </div>
+
+    <ul class="prediction-list">
+        {% if predictions %}
+            <li class="weapons-img">
+                {% if predictions['PrimaryAssaultRifle'] %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimaryAssaultTrue.png') }}" alt="Assault Rifle">
+                {% else %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimaryAssaultFalse.png') }}" alt="No Assault Rifle">
+                {% endif %}
+            </li>
+            <li class="weapons-img">
+                {% if predictions['PrimarySniperRifle'] %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimarySniperTrue.png') }}" alt="Sniper Rifle">
+                {% else %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimarySniperFalse.png') }}" alt="No Sniper Rifle">
+                {% endif %}
+            </li>
+            <li class="weapons-img">
+                {% if predictions['PrimaryHeavy'] %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimaryHeavyTrue.png') }}" alt="Heavy">
+                {% else %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimaryHeavyFalse.png') }}" alt="No Heavy">
+                {% endif %}
+            </li>
+            <li class="weapons-img">
+                {% if predictions['PrimarySMG'] %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimarySMGTrue.png') }}" alt="SMG">
+                {% else %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimarySMGFalse.png') }}" alt="No SMG">
+                {% endif %}
+            </li>
+            <li class="weapons-img">
+                {% if predictions['PrimaryPistol'] %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimaryPistolTrue.png') }}" alt="Pistol">
+                {% else %}
+                    <img class="prediction-image" src="{{ url_for('static', filename='img/weapons/PrimaryPistolFalse.png') }}" alt="No Pistol">
+                {% endif %}
+            </li>
+        {% else %}  
+            <li>No predictions available.</li>
+        {% endif %}
+    </ul>
+
+    <div class="page-info">
+        {% if round_winner == 1 %}
+            <h3>Dado el equipamiento comprado por el equipo rival, es más probable que ganen la ronda</h3>
+        {% elif round_winner == 0 %}
+            <h3>Dado el equipamiento comprado por el equipo rival, es más probable que no ganen la ronda</h3>
+        {% else %}
+            <p>Resultado de la ronda desconocido.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>

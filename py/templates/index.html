@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CsApp</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    
+</head>
+<body>
+    <h1>CsApp</h1>
+    <!-- Navbar con botones -->
+    <div class="navbar">
+        <button id="btnEstadistica" onclick="focusEstadistica()">Estadísticas</button>
+        <button id="btnVictoria" onclick="focusVictoria()">Predecir Victoria</button>
+        <button id="btnEquipamiento" onclick="focusEconomia()">Predecir Equipamiento</button>
+    </div>
+
+    <!-- Info Página-->
+
+    <div class="page-info">
+        <h2>Objetivos de la Aplicación</h2>
+        <p>Analizar la inversión en equipamiento de los jugadores y su correlación con el éxito en las rondas del juego.</p>
+        
+        <h3>Objetivos Secundarios:</h3>
+        <ul>
+            <li>Relación entre el valor del equipamiento inicial y el equipamiento de los jugadores.</li>
+            <li>Desarrollo de un modelo predictivo para predecir el ganador basado en la inversión inicial.</li>
+        </ul>
+        
+        <h2>Criterios de Éxito</h2>
+        <h3>Cuantitativo:</h3>
+        <ul>
+            <li>Modelo predictivo con precisión superior al 70% en la predicción del equipamiento.</li>
+            <li>Correlación significativa entre la inversión en equipamiento y la probabilidad de ganar rondas.</li>
+        </ul>
+        
+        <h3>Cualitativo:</h3>
+        <ul>
+            <li>Insights sobre la gestión económica de los equipos para mejorar estrategias de juego.</li>
+            <li>Recomendaciones basadas en datos para jugadores sobre gestión de recursos en el juego.</li>
+        </ul>
+        
+        <h2>Contribución al Negocio/Juego</h2>
+        <h3>Para Jugadores:</h3>
+        <p>Estrategias basadas en datos para mejorar tasas de victoria optimizando la inversión en equipamiento.</p>
+        
+        <h3>Para Desarrolladores y Analistas de Juegos:</h3>
+        <p>Información sobre cómo el equilibrio económico afecta la dinámica del juego, útil para futuras actualizaciones.</p>
+        
+        <h3>Para la Comunidad de eSports:</h3>
+        <p>Análisis detallados sobre la importancia de la economía en el juego, útiles para estrategias de equipo.</p>
+    </div>
+
+    <!-- x -->
+
+    <div id="economia" class="economia">
+    <form action="/predict" method="post">
+        <p style="text-align: center;">Este modelo permitirá predecir que armas comprará el equipo rival según su nivel de economía</p>
+        <h3 for="team_starting_value">Ingrese el total economico del equipo rival:</h3>
+        <input type="text" id="team_starting_value" name="team_starting_value" placeholder="Ingrese el total economico del equipo rival..."><br>
+        <input type="submit" value="Predecir">
+    </form>
+    </div>
+    <br>
+
+    <!-- Victoria -->
+    <div id="victoria" class="victoria">
+        <form action="/predict_victoria" method="post">
+            <p style="text-align: center;">Este modelo permitirá predecir que si el equipo ganará la ronda segun su equipamiento</p>
+            <h3>Seleccione las armas:</h3>
+            <label for="PrimaryAssaultRifle">Primary Assault Rifle
+                <input type="checkbox" id="PrimaryAssaultRifle" name="PrimaryAssaultRifle" value="1">
+            </label>
+            <br>
+            <label for="PrimarySniperRifle">Primary Sniper Rifle
+                <input type="checkbox" id="PrimarySniperRifle" name="PrimarySniperRifle" value="1">
+            </label><br>
+            <label for="PrimaryHeavy">Primary Heavy
+                <input type="checkbox" id="PrimaryHeavy" name="PrimaryHeavy" value="1">
+            </label><br>
+            <label for="PrimarySMG">Primary SMG
+                <input type="checkbox" id="PrimarySMG" name="PrimarySMG" value="1">
+            </label><br>
+            <label for="PrimaryPistol">Primary Pistol
+                <input type="checkbox" id="PrimaryPistol" name="PrimaryPistol" value="1">
+            </label>
+            <input type="submit" value="Predecir Victoria">
+        </form>
+    </div>
+
+    <br>
+
+<!-- Estadísticas -->
+<div id="estadisticas" class="estadisticas">
+    <h1>Estadísticas de Modelos</h1>
+    <div id="modelStats">
+        <!-- Resultados de Decision Tree 1 -->
+        <div id="decisionTree1Stats">
+            <h3>Armas más relevantes:</h3>
+            <!-- Aquí se mostrarán los gráficos del Decision Tree 1 -->
+            <img src="{{ url_for('static', filename='graficos/histogram_PrimaryAssaultRifle.png') }}" alt="Histogram PrimaryAssaultRifle">
+            <p style="text-align: center;">Gracias a este grafico podemos observar una clara tendencia, en mayor cantidad de economia los jugadores optan por la utilización de este tipo de armas.</p>
+            <br>
+            <img src="{{ url_for('static', filename='graficos/histogram_PrimaryPistol.png') }}" alt="Histogram PrimaryPistol">
+            <p style="text-align: center;">En contra posición observamos otra tendencia, en economias escasas los jugadores por obviar la compra con el fin de aumentar la economia de la siguiente ronda. En algunos casos, este tipo de armas se utilizan con mayor frecuencia, cuando se habla de economias bajas.</p>
+            <br>
+        </div>
+        <!-- Resultados de Decision Tree 2 -->
+        <div id="decisionTree2Stats">
+            <h3>Precisión de analisis de posible victoria según equipamiento:</h3>
+            <!-- Aquí se mostrarán los gráficos del Decision Tree 2 -->
+            <img src="{{ url_for('static', filename='graficos/confusion_RoundWinner.png') }}" alt="Confusion RoundWinner">
+            <p style="text-align: center;">Por otro lado, el segundo modelo de árbol de decisiones ofrece insights valiosos sobre la relación entre la inversión inicial en equipamiento y la probabilidad de ganar la ronda. Aunque su precisión general puede ser moderada, su capacidad para identificar cuando el equipo perderá la ronda es notable, lo que permite a los jugadores anticipar situaciones desfavorables y adaptar sus estrategias en consecuencia.</p>
+        </div>
+    </div>
+</div>
+
+    <!-- Botón Volver Arriba -->
+    <button id="scrollToTopBtn" title="Volver arriba">&#8679;</button>
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+</body>
+</html>
